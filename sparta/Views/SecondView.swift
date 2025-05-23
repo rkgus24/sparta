@@ -1,8 +1,17 @@
 import SwiftUI
 
 struct SecondView: View {
+    @Environment(\.presentationMode) var presentationMode
+
     var body: some View {
         VStack {
+            HStack {
+                BackButton {
+                    presentationMode.wrappedValue.dismiss()
+                }
+                .padding(.leading, 20)
+                Spacer()
+            }
             Spacer()
             HStack {
                 Spacer()
@@ -26,5 +35,6 @@ struct SecondView: View {
                 .ignoresSafeArea()
                 .opacity(0.5)
         )
+        .navigationBarBackButtonHidden(true)
     }
 }

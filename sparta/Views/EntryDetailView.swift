@@ -1,41 +1,44 @@
 import SwiftUI
 
 struct EntryDetailView: View {
+    @Environment(\.dismiss) private var dismiss
     let entry: Entry
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-
-                Text(entry.title)
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                if let image = entry.image {
-                    Image(uiImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(12)
-                } else {
-                    Image(systemName: "photo")
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                        .foregroundColor(.gray)
-                        .padding(.vertical)
-                }
-                
-                Text(entry.content)
-                    .font(.body)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                Spacer()
+        VStack(alignment: .leading, spacing: 16) {
+            Text(entry.title)
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+            if let uiImage = entry.image {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: .infinity)
+                    .cornerRadius(12)
             }
-            .padding()
+
+            Text(entry.content)
+                .font(.body)
+                .foregroundColor(.white)
+
+            Spacer()
         }
-        .background(Color.dark900.ignoresSafeArea())
+        .padding()
         .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("뒤로")
+                    }
+                    .foregroundColor(.white)
+                }
+            }
+        }
+        .background(Color("dark900").ignoresSafeArea())
     }
 }
